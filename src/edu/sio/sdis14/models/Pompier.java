@@ -1,5 +1,7 @@
 package edu.sio.sdis14.models;
 
+import edu.sio.sdis14.TelNumberException;
+
 public class Pompier {
 
 	private String prenom;
@@ -41,12 +43,12 @@ public class Pompier {
 		return tel.replaceFirst("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1.$2.$3.$4.$5");
 	}
 
-	public void setTel(String tel) throws NumberFormatException {
+	public void setTel(String tel) throws TelNumberException {
 		
 		tel = tel.replaceFirst("^\\+33", "0").replaceAll("[^0-9]", "");
 		
 		if(tel.length() != 10) {
-			throw new NumberFormatException("Un numéro de téléphone doit contenir 10 chiffres !");
+			throw new TelNumberException("Un numéro de téléphone doit contenir 10 chiffres !");
 		}
 		
 		this.tel = tel;

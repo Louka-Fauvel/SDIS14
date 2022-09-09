@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.sio.sdis14.TelNumberException;
 import edu.sio.sdis14.models.Pompier;
 
 class PompierTest {
@@ -45,7 +46,7 @@ class PompierTest {
 	}
 
 	@Test
-	void testSetTel() {
+	void testSetTel() throws TelNumberException {
 		
 		pompier.setTel("0674018434");
 		assertEquals("06.74.01.84.34", pompier.getTel());
