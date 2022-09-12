@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import edu.sio.sdis14.TelNumberException;
+import edu.sio.sdis14.exceptions.TelNumberException;
 import edu.sio.sdis14.models.Pompier;
 
 class PompierTest {

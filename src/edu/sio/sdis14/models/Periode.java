@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.sio.sdis14.exceptions.PompierNotFoundException;
+
 public class Periode {
 
 	private Date laDate;
@@ -29,15 +31,49 @@ public class Periode {
 	 * @param pompier
 	 * @return
 	 */
-	public char getStatut(Pompier pompier) {
-		return 'm';
+	public char getStatut(Pompier pompier) throws PompierNotFoundException {
+		
+		if(disponible.contains(pompier)) {
+			
+			return 'd';
+			
+		} else if(auTravail.contains(pompier)) {
+			
+			return 't';
+			
+		} else if(enMission.contains(pompier)) {
+			
+			return 'm';
+			
+		}
+		
+		throw new PompierNotFoundException();
+		
 	}
 	
-	public void missionner(Pompier pompier) {
-		this.ajouterPompier(pompier, 'm');
+	public boolean missionner(Pompier pompier) throws PompierNotFoundException {
+		
+		if(auTravail.remove(pompier) || disponible.remove(pompier)) {
+			
+			return enMission.add(pompier);
+			
+		} 
+		
+		if(enMission.contains(pompier)) {
+			
+			return false;
+			
+		}
+		
+		throw new PompierNotFoundException();
+		
 	}
 	
 	public void ajouterPompier(Pompier pompier, char statut) {
+		
+		auTravail.remove(pompier);
+		disponible.remove(pompier);
+		enMission.remove(pompier);
 		
 		switch(statut) {
 		case 't':
@@ -54,6 +90,26 @@ public class Periode {
 	}
 	
 	public List<Pompier> selecEquipe(int nbPompiers) {
+		
+		List<Pompier> selecteds = new ArrayList<>();
+		int selectedCount = 0;
+		int maxDisp = Math.min(disponible.size(), nbPompiers);
+		
+		for (selectedCount = 0; selectedCount < maxDisp; selectedCount++) {
+			selecteds.add(disponible.get(selectedCount));
+		}
+		
+		int maxAuTravail = Math.min(auTravail.size(), nbPompiers - selectedCount);
+		
+		for (int i = 0; i < maxAuTravail; i++) {
+			selecteds.add(auTravail.get(i));
+		}
+		
+//		for (selectedCount = 0; selectedCount < maxDisp; selectedCount++) {
+//			selecteds.add(disponible.get(selectedCount));
+//		}
+		
+		return selecteds;
 		
 	}
 	

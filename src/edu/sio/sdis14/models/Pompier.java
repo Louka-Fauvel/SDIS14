@@ -1,6 +1,6 @@
 package edu.sio.sdis14.models;
 
-import edu.sio.sdis14.TelNumberException;
+import edu.sio.sdis14.exceptions.TelNumberException;
 
 public class Pompier {
 
@@ -45,13 +45,19 @@ public class Pompier {
 
 	public void setTel(String tel) throws TelNumberException {
 		
-		tel = tel.replaceFirst("^\\+33", "0").replaceAll("[^0-9]", "");
+		this.tel = cleanTel(tel);
 		
-		if(tel.length() != 10) {
+	}
+	
+	public static String cleanTel(String numero) throws TelNumberException {
+		
+		numero = numero.replaceFirst("^\\+33", "0").replaceAll("[^0-9]", "");
+		
+		if(numero.length() != 10) {
 			throw new TelNumberException("Un numéro de téléphone doit contenir 10 chiffres !");
 		}
 		
-		this.tel = tel;
+		return numero;
 		
 	}
 	
@@ -66,6 +72,20 @@ public class Pompier {
 	@Override
 	public String toString() {
 		return getIdentite();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		if(obj == null) {
+			return false;
+		}
+		
+		if(!(obj instanceof Pompier)) {
+			return false;
+		}
+		
+		return ((Pompier)obj).getIdentite().equals(getIdentite());
 	}
 	
 }

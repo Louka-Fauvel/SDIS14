@@ -1,4 +1,4 @@
-package edu.sio.sdis14;
+package edu.sio.sdis14.exceptions;
 
 public class TelNumberException extends Exception {
 

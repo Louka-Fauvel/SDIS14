@@ -2,6 +2,7 @@ package edu.sio.sdis14;
 
 import java.util.Scanner;
 
+import edu.sio.sdis14.exceptions.TelNumberException;
 import edu.sio.sdis14.models.Pompier;
 
 public class Prog {
