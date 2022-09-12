@@ -1,6 +1,8 @@
 package edu.sio.sdis14.models;
 
+import edu.sio.sdis14.exceptions.PompierNotFoundException;
 import edu.sio.sdis14.exceptions.TelNumberException;
+import edu.sio.sdis14.technics.TelNumberFormat;
 
 public class Pompier {
 
@@ -40,33 +42,21 @@ public class Pompier {
 	}
 
 	public String getTel() {
-		return tel.replaceFirst("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1.$2.$3.$4.$5");
+		return TelNumberFormat.NumberAsTel(tel);
 	}
 
 	public void setTel(String tel) throws TelNumberException {
 		
-		this.tel = cleanTel(tel);
+		this.tel = TelNumberFormat.telAsNumber(tel);
 		
 	}
 	
-	public static String cleanTel(String numero) throws TelNumberException {
-		
-		numero = numero.replaceFirst("^\\+33", "0").replaceAll("[^0-9]", "");
-		
-		if(numero.length() != 10) {
-			throw new TelNumberException("Un numéro de téléphone doit contenir 10 chiffres !");
-		}
-		
-		return numero;
-		
+	public boolean missionner(Periode periode) throws PompierNotFoundException {
+		return periode.missionner(this);
 	}
 	
-	public void missionner(Periode periode) {
-		
-	}
-	
-	public char getStatut(Periode periode) {
-		return ' ';
+	public char getStatut(Periode periode) throws PompierNotFoundException {
+		return periode.getStatut(this);
 	}
 	
 	@Override
